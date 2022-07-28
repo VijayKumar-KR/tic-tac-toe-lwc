@@ -1,26 +1,31 @@
 import { LightningElement } from 'lwc';
+
 // Resource-Image
-import congratsImg from '@salesforce/resourceUrl/congrats_img'; 
-import AstroImg from '@salesforce/resourceUrl/Astro_img';
+import congrats_img from '@salesforce/resourceUrl/congrats_img'; 
+import Astro_img from '@salesforce/resourceUrl/Astro_img';
+
 // turn icons
-import Xicon from '@salesforce/resourceUrl/X_icon';  
-import Oicon from '@salesforce/resourceUrl/O_icon';
+import X_icon from '@salesforce/resourceUrl/X_icon';  
+import O_icon from '@salesforce/resourceUrl/O_icon';
+
 // level img
 import beast_level from '@salesforce/resourceUrl/beast_level';
+
 // Resource-Track
-import turnChangeTrack from '@salesforce/resourceUrl/turn_change_track';
-import winnerTrack from '@salesforce/resourceUrl/winner_track';
-import restartTrack from '@salesforce/resourceUrl/restart_track'; 
+import turn_change_track from '@salesforce/resourceUrl/turn_change_track';
+import winner_track from '@salesforce/resourceUrl/winner_track';
+import restart_track from '@salesforce/resourceUrl/restart_track'; 
+import swap_player_track from '@salesforce/resourceUrl/swap_player_track'; 
+
 // Instructions
 import instruction_img from '@salesforce/resourceUrl/instruction_img'; 
 import instructions from '@salesforce/label/c.tic_tac_toe_instructions';
+
 // toast 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import header_background_img from '@salesforce/resourceUrl/header_background_img'; 
 
 export default class TicTacToe extends LightningElement {
     
-    header_background_img = header_background_img
     // default turn 
     turn = 'X'
     // show/hide Start Game text
@@ -66,17 +71,14 @@ export default class TicTacToe extends LightningElement {
     cornermoves = [0, 2, 6, 8]
     centermove = [4]
     // img
-    congrats_img = congratsImg
-    Astro_img = AstroImg
+    congrats_img = congrats_img
+    Astro_img = Astro_img
     // turn icon
-    X_icon = Xicon
-    O_icon = Oicon
+    X_icon = X_icon
+    O_icon = O_icon
     // level img
     beast_level = beast_level
-    //track
-    turn_change_track = turnChangeTrack;
-    winner_track = winnerTrack;
-    restart_track = restartTrack;
+    // sound
     muted = false
     // spinner
     isLoading = false
@@ -99,6 +101,7 @@ export default class TicTacToe extends LightningElement {
     handleChangeTurn(){
         if(!this.isGameOn){
             this.swapTurn();
+            this.playTrack(swap_player_track)
             this.template.querySelector('[data-id=player-turn-text]').textContent = this.turn+' turn';
             this.showToast('Player Updated', 'You changed player to \"'+this.turn+'\"', 'info');
         }else{
@@ -113,10 +116,6 @@ export default class TicTacToe extends LightningElement {
     // add border bottom color for O-turn
     get displayBottomColorForOTurn(){
         return this.turn === "O" ? "borderBottomColor pointsTable" : "pointsTable";
-    }
-
-    get backgroundStyle(){
-        return `border-radius: 10px;height:15rem;background-image:url(${header_background_img})`;
     }
 
     // Shuffle Mute and unMute
@@ -182,7 +181,7 @@ export default class TicTacToe extends LightningElement {
             // Avoid adding CSS for Next turn without onclick
             this.template.querySelector('[data-id=box-'+boxindex+']').classList.remove(this.turn+'-turn-color')
             // play sound on each turn 
-            this.playTrack(this.turn_change_track);
+            this.playTrack(turn_change_track);
             // Next turn value on screen
             this.template.querySelector('[data-id=player-turn-text]').textContent = this.turn+' turn';
             // checkDrawMatch
@@ -383,7 +382,7 @@ export default class TicTacToe extends LightningElement {
                     // Update players Score
                     this.updatePoints();
                     // play winner sound track
-                    this.playTrack(this.winner_track);
+                    this.playTrack(winner_track);
                     winnotfound = false
             }
         });
@@ -461,7 +460,7 @@ export default class TicTacToe extends LightningElement {
         this.isGameOn = false;
         this.turn = 'X';
         // Play restart track
-        this.playTrack(this.restart_track);
+        this.playTrack(restart_track);
         // Remove player-won value text
         this.template.querySelector('[data-id=player-won]').textContent = '';
         // Remove Next turn value text
