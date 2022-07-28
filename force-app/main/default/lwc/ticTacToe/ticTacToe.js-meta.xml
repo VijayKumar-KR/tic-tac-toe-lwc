@@ -3,6 +3,7 @@
     <apiVersion>55.0</apiVersion>
     <isExposed>true</isExposed>
     <targets>
+        Test
         <target>lightning__AppPage</target>
         <target>lightning__RecordPage</target>
         <target>lightning__HomePage</target>
