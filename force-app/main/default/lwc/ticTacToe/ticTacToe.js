@@ -16,9 +16,11 @@ import instruction_img from '@salesforce/resourceUrl/instruction_img';
 import instructions from '@salesforce/label/c.tic_tac_toe_instructions';
 // toast 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import header_background_img from '@salesforce/resourceUrl/header_background_img'; 
 
 export default class TicTacToe extends LightningElement {
     
+    header_background_img = header_background_img
     // default turn 
     turn = 'X'
     // show/hide Start Game text
@@ -111,6 +113,10 @@ export default class TicTacToe extends LightningElement {
     // add border bottom color for O-turn
     get displayBottomColorForOTurn(){
         return this.turn === "O" ? "borderBottomColor pointsTable" : "pointsTable";
+    }
+
+    get backgroundStyle(){
+        return `border-radius: 10px;height:15rem;background-image:url(${header_background_img})`;
     }
 
     // Shuffle Mute and unMute
