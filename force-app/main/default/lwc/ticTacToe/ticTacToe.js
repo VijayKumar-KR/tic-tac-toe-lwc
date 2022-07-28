@@ -14,6 +14,8 @@ import restartTrack from '@salesforce/resourceUrl/restart_track';
 // Instructions
 import instruction_img from '@salesforce/resourceUrl/instruction_img'; 
 import instructions from '@salesforce/label/c.tic_tac_toe_instructions';
+// toast 
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class TicTacToe extends LightningElement {
     
@@ -51,8 +53,7 @@ export default class TicTacToe extends LightningElement {
     // options
     options = [{ label: 'Play against a Friend', value: 'Friend' },
                 { label: 'Level 0: Easy', value: 'CPU_Easy' },
-                { label: 'Level 1: Beast', value: 'CPU_Hard' }
-                ]
+                { label: 'Level 1: Beast', value: 'CPU_Hard' }]
     // computer turn var
     level = 'CPU_Easy';
     isFirstTurn = true;
@@ -90,6 +91,17 @@ export default class TicTacToe extends LightningElement {
     // change to next turn value
     swapTurn(){
         this.turn = this.turn === "X" ? "O" : "X";
+    }
+
+    // Swap player
+    handleChangeTurn(){
+        if(!this.isGameOn){
+            this.swapTurn();
+            this.template.querySelector('[data-id=player-turn-text]').textContent = this.turn+' turn';
+            this.showToast('Player Updated', 'You changed player to \"'+this.turn+'\"', 'info');
+        }else{
+            this.showToast('Error', 'You can\'t change the player while game is on!', 'error');
+        }
     }
 
     // add border bottom color for X-turn
@@ -395,10 +407,12 @@ export default class TicTacToe extends LightningElement {
         if(this.level.includes('Hard')){
             this.template.querySelector('[class=levelimg]').style.width = `155px`;
             this.template.querySelector('[data-id=hu-lose]').textContent = 'You Lose!';
+            this.showToast('You Lose!', 'Restart game and play again!', 'info');
         }
         // img for easy level 
         else{
             this.template.querySelector('[class=congratsImg]').style.width = `300px`;
+            this.showToast('You Won', 'Congratulations!', 'success');
         }
     }
 
@@ -424,6 +438,7 @@ export default class TicTacToe extends LightningElement {
             this.template.querySelector('[data-id=player-turn-text]').textContent = '';
             // Dsiplay Result as "Draw"
             this.template.querySelector('[data-id=player-won]').textContent = 'Draw';
+            this.showToast('Draw Match', 'Restart game and play again!', 'warning');
         }
     }
 
@@ -433,6 +448,7 @@ export default class TicTacToe extends LightningElement {
         this.currentBoardIndexValue = [0, 1, 2, 3, 4, 5, 6, 7, 8]
         this.isLoading = true;
         this.isGameOver = false;
+        this.isGameOn = false;
         this.turn = 'X';
         // Play restart track
         this.playTrack(this.restart_track);
@@ -461,6 +477,17 @@ export default class TicTacToe extends LightningElement {
     // Play track sound
     playTrack(trackValue){
         this.muted ? '' :  new Audio(trackValue).play();
+    }
+
+    // toast message
+    showToast(title, msg, variant) {
+        const event = new ShowToastEvent({
+            title: title,
+            message: msg,
+            variant: variant,
+            mode: 'dismissable'
+        });
+        this.dispatchEvent(event);
     }
     
 }

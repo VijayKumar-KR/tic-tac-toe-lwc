@@ -50,6 +50,11 @@
         <!-- Game Info -->
         <lightning-layout class="slds-align_absolute-center gameInfo">
             <lightning-layout-item padding="">
+                <span style="cursor: pointer;" class="slds-p-right_medium"><lightning-icon icon-name="utility:replace" 
+                                        alternative-text="Swap Player!" 
+                                        title="Swap Player"
+                                        onclick={handleChangeTurn}
+                                        size="x-small"></lightning-icon></span>
                 <span if:true={isGameOver}>Game Over: </span>
                 <span if:false={isGameOn}>Start game: </span>
                 <span data-id="player-turn-text">X-turn</span>
