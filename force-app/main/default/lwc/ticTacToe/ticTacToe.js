@@ -409,10 +409,14 @@ export default class TicTacToe extends LightningElement {
             this.template.querySelector('[data-id=hu-lose]').textContent = 'You Lose!';
             this.showToast('You Lose!', 'Restart game and play again!', 'info');
         }
-        // img for easy level 
+        // img for easy level and play with friend
         else{
             this.template.querySelector('[class=congratsImg]').style.width = `300px`;
-            this.showToast('You Won', 'Congratulations!', 'success');
+            if(this.level.includes('Friend')){
+                this.showToast('\"'+this.turn+'\" Won', 'Congratulations!', 'success');
+            }else{
+                this.showToast('You Won', 'Congratulations!', 'success');
+            }
         }
     }
 
