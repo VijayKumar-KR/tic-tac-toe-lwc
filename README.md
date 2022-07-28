@@ -10,7 +10,9 @@ Added additional feature to improve Play area look and feel.
 
 ## Credits
 
-Computer AI Minimax Logic: [Codepen](https://codepen.io/abdolsa/pen/mrBGoz?editors=1011)
+Some of the look and feel inspired by google tic tac toe
+Some of the animation inspired by codewithharry tic tac toe
+Computer AI Minimax Algorithm: [Codepen](https://codepen.io/abdolsa/pen/mrBGoz?editors=1011)
 
 ## Keep supporting and follow my Salesforce Blog
 
