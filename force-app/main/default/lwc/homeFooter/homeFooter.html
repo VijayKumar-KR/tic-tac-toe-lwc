@@ -1,0 +1,87 @@
+<template>
+    
+    <div class="main slds-box">
+        <!-- footer logo title -->
+        <lightning-layout>
+            <lightning-layout-item class="slds-align_absolute-center">
+                <code>SFDC CHAMPION</code>
+            </lightning-layout-item>
+        </lightning-layout>
+        <lightning-layout>
+            <lightning-layout-item class="slds-align_absolute-center">
+                <code>Start learing, More Growing</code>
+            </lightning-layout-item>
+        </lightning-layout>
+
+        <!-- footer Details -->
+        <lightning-layout>
+            <!-- left section -->
+            <lightning-layout-item>
+                <!-- Explaore -->
+                <lightning-layout>
+                    <lightning-layout-item class="sectiontitle">
+                        Explore
+                    </lightning-layout-item>
+                </lightning-layout>
+                <lightning-layout>
+                    <lightning-layout-item>
+                        <a onclick={handleClickSocialIcon} data-id="https://sfdcchampion4u.wordpress.com/">Blog</a>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <!-- Follow  Me -->
+                <lightning-layout class="slds-p-top_x-small">
+                    <lightning-layout-item class="sectiontitle">
+                        Follow Me
+                    </lightning-layout-item>
+                </lightning-layout>
+                <lightning-layout>
+                    <template for:each={iconsList} for:item="icon">
+                        <lightning-layout-item key={icon.dataid}>
+                            <img onclick={handleClickSocialIcon} class="icons" data-id={icon.dataid} src={icon.src} alt={icon.alt}>
+                        </lightning-layout-item>
+                    </template>
+                </lightning-layout>
+            </lightning-layout-item>
+            <!-- right section -->
+            <lightning-layout-item alignment-bump="left">
+                <!-- Overview -->
+                <lightning-layout>
+                    <lightning-layout-item class="sectiontitle">
+                        Overview
+                    </lightning-layout-item>
+                </lightning-layout>
+                <lightning-layout>
+                    <lightning-layout-item>
+                        <a href="/s/about">About</a>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <lightning-layout>
+                    <lightning-layout-item>
+                        <a href="/s/contact-me">Contact Me</a>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+
+    <!-- footer -->
+    <lightning-layout class="footer slds-box slds-box_xx-small">
+        <lightning-layout-item >
+            Made with 
+            <svg viewBox="467 392 58 57" 
+                xmlns="http://www.w3.org/2000/svg" data-status="heart">
+                <g fill="none" fill-rule="evenodd" transform="translate(467 392)">
+                    <path d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 
+                            21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z" fill="red">
+                    </path>
+                </g>
+            </svg> in Salesforce Community
+        </lightning-layout-item>
+        <lightning-layout-item class="slds-align_absolute-center">
+            Copyright © 2022 &nbsp;<b>SFDCCHAMPION, Inc.</b>&nbsp; All Rights Reserved.
+        </lightning-layout-item>
+        <lightning-layout-item >
+            <a>Primary Policy</a> | <a>Terms of Service</a> | <a>Report a vulnerability</a>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>
