@@ -6,10 +6,15 @@ import wordpress_img from '@salesforce/resourceUrl/wordpress_img';
 import insta_img from '@salesforce/resourceUrl/insta_img';
 import facebook_img from '@salesforce/resourceUrl/facebook_img';
 import twitter_img from '@salesforce/resourceUrl/twitter_img';
+// logo-Image
+import logo_img from '@salesforce/resourceUrl/logo_img'; 
 // navigation
 import { NavigationMixin } from 'lightning/navigation';
 
 export default class HomeFooter extends NavigationMixin (LightningElement) {
+    
+    // logo
+    logo_img = logo_img
     
     // socail media icons
     iconsList = [
