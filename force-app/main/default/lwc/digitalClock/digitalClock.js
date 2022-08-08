@@ -21,8 +21,14 @@ export default class DigitalClock extends LightningElement {
     // options
     options = []
     // computer turn var
-    defaultTz = 'Asia/Kolkata';
-    
+    timezone = 'Asia/Kolkata';
+
+    // set background image
+    get backgroundStyle() {
+        return `background-image:url(${digitalclockback})`;
+    }
+
+    // 12/24 format change
     handleChangeFormat(event){
         this.checked = !this.checked;
         this.timeformat = this.checked? 12 : 24;
@@ -35,10 +41,33 @@ export default class DigitalClock extends LightningElement {
             this.getAllTimeZone();
         }
         this.timer = setInterval(() => {
-            this.setTimeout();
+            this.setDateTime();
         }, 1000);
     }
 
+    // destroy timer
+    disconnectedCallback() {
+        clearInterval(this.timer);
+    }
+
+    // fetch current user ip details
+    async getUserIp(){
+        await fetch(IPINFO_API_URL+'?token='+IPINFO_API)
+        .then(response => {
+            if(response.ok) {
+                return response.clone().json();
+            } 
+            else {
+                throw Error(response);
+            }
+        })
+        .then(ipinfo => {
+                this.ipinfo = ipinfo;
+        })
+        .catch(error => console.log('error in getUserIp: ',error))
+    }
+
+    // fetch all timezone names
     async getAllTimeZone(){
         await fetch(WORLD_API_URL+'/api/timezone')
             .then(response => {
@@ -60,33 +89,14 @@ export default class DigitalClock extends LightningElement {
             .catch(error => console.log('error in getAllTimeZone: ',error))
     }
 
-    async getUserIp(){
-        await fetch(IPINFO_API_URL+'?token='+IPINFO_API)
-        .then(response => {
-            if(response.ok) {
-                return response.clone().json();
-            } 
-            else {
-                throw Error(response);
-            }
-        })
-        .then(ipinfo => {
-                this.ipinfo = ipinfo;
-        })
-        .catch(error => console.log('error in getUserIp: ',error))
+    // selected timezone value
+    handleChangeLevel(event){
+        this.timezone = event.detail.value;
     }
 
-    // destroy timer
-    disconnectedCallback() {
-        clearInterval(this.timer);
-    }
-
-    get backgroundStyle() {
-        return `background-image:url(${digitalclockback})`;
-    }
-
-    setTimeout(){
-        let date = new Date();
+    // set time and date
+    setDateTime(){
+        let date = new Date(new Date().toLocaleString("en-US", {timeZone: this.timezone}));
         // timestamp
         this.ipinfo.datetime = date.getTime();
         let h = date.getHours();
@@ -105,6 +115,7 @@ export default class DigitalClock extends LightningElement {
         this.template.querySelector('[data-id=meridiem]').textContent = meridiem;
     }
 
+    // add 0 to single digit hour/minute
     getformat(val){
         return val < 10 ? '0'+val : val;
     }
