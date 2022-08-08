@@ -23,23 +23,25 @@
             </lightning-layout-item>
             <lightning-layout-item alignment-bump="left">
                 <lightning-layout>
-                    <lightning-layout-item style="padding-right: 90px;" padding="around-small">
+                    <lightning-layout-item padding="around-small">
                         Select TimeZone 
-                        <lightning-combobox name="Select Time Zone"
-                                            value={defaultTz}
+                        <lightning-combobox style="width: 16rem; color:black"
+                                            name="Select Time Zone"
+                                            value={timezone}
                                             placeholder="Select Time Zone"
                                             options={options}
                                             onchange={handleChangeLevel}></lightning-combobox>
                     </lightning-layout-item>
                     <lightning-layout-item padding="around-small">
-                        <lightning-input style="color: white;"
-                                            data-id="toggle" 
+                        <lightning-input data-id="toggle" 
+                                            class="textInput"
                                             type="toggle" 
                                             label="time Format" 
                                             checked={checked} 
                                             onchange={handleChangeFormat}
                                             message-toggle-active="12 hr" 
-                                            message-toggle-inactive="24 hr"></lightning-input>
+                                            message-toggle-inactive="24 hr"
+                                            variant="label-hidden"></lightning-input>
                     </lightning-layout-item>
                 </lightning-layout>
             </lightning-layout-item>

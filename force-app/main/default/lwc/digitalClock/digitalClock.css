@@ -28,6 +28,7 @@
     font-size: 3rem;
     padding-bottom: 2rem;
 }
+/* AM/PM */
 .meridiem{
     margin-top: 26%;
 }
@@ -41,4 +42,8 @@
     0%{transform:scale(1);}
     40%{transform:scale(1.3);}
     100%{transform:scale(1);}
+}
+/* 12/24 */
+.textInput{
+    -webkit-text-fill-color: white;
 }
