@@ -1,0 +1,95 @@
+<template>
+    <div class="main" style={backgroundStyle}>
+        <lightning-layout>
+            <lightning-layout-item class="userip" padding="around-small">
+                <lightning-layout>
+                    Your Details:
+                </lightning-layout>
+                <lightning-layout>
+                    IP: {ipinfo.ip}
+                </lightning-layout>
+                <lightning-layout>
+                    {ipinfo.city}, {ipinfo.region}, {ipinfo.country}
+                </lightning-layout>
+                <lightning-layout>
+                    TZ: {ipinfo.timezone}
+                </lightning-layout>
+                <lightning-layout>
+                    Loc: {ipinfo.loc}
+                </lightning-layout>
+            </lightning-layout-item>
+            <lightning-layout-item class="title" padding="around-medium">
+                DIGITAL CLOCK
+            </lightning-layout-item>
+            <lightning-layout-item alignment-bump="left">
+                <lightning-layout>
+                    <lightning-layout-item style="padding-right: 90px;" padding="around-small">
+                        Select TimeZone 
+                        <lightning-combobox name="Select Time Zone"
+                                            value={defaultTz}
+                                            placeholder="Select Time Zone"
+                                            options={options}
+                                            onchange={handleChangeLevel}></lightning-combobox>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small">
+                        <lightning-input style="color: white;"
+                                            data-id="toggle" 
+                                            type="toggle" 
+                                            label="time Format" 
+                                            checked={checked} 
+                                            onchange={handleChangeFormat}
+                                            message-toggle-active="12 hr" 
+                                            message-toggle-inactive="24 hr"></lightning-input>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+        </lightning-layout>
+        <div class="slds-align_absolute-center" style="flex-direction: column;">
+            <lightning-layout class="slds-box" multiple-rows>
+                <lightning-layout-item size="4">
+                    <lightning-layout class="clock slds-text-align_center">
+                        <lightning-layout-item class="block" padding="around-small">
+                            <span class="val" data-id="hour"></span>
+                            <span class="text">Hour</span>
+                        </lightning-layout-item>
+                        <span class="colon slds-align_absolute-center" data-id="">:</span>
+                        <lightning-layout-item class="block" padding="around-small">
+                            <span class="val" data-id="min"></span>
+                            <span class="text">Minute</span>
+                        </lightning-layout-item>
+                        <span class="colon slds-align_absolute-center" data-id="">:</span>
+                        <lightning-layout-item class="block" padding="around-small">
+                            <span class="val" data-id="sec"></span>
+                            <span class="text">Seconds</span>
+                        </lightning-layout-item>
+                        <svg viewBox="467 392 58 57" 
+                            xmlns="http://www.w3.org/2000/svg" data-status="heart">
+                            <g fill="none" fill-rule="evenodd" transform="translate(467 392)">
+                                <path d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 
+                                        21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z" fill="red">
+                                </path>
+                            </g>
+                        </svg>
+                        <span class="meridiem" data-id="meridiem"></span>
+                    </lightning-layout>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout multiple-rows class="" style="margin: -2%;letter-spacing: 2px;">
+                <lightning-layout-item>
+                    <lightning-layout class="clock slds-text-align_center">
+                        <lightning-formatted-date-time value={ipinfo.datetime} 
+                                                year="numeric" 
+                                                month="short" 
+                                                day="numeric" 
+                                                weekday="long"
+                                                hour12="true"
+                                                time-zone-name="long"></lightning-formatted-date-time>
+                    </lightning-layout>
+                </lightning-layout-item>
+                <!-- <lightning-layout-item>
+                    , &nbsp;{ipinfo.timezone}
+                </lightning-layout-item> -->
+            </lightning-layout>
+        </div>
+    </div>
+</template>

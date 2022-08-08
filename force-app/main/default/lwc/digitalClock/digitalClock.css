@@ -1,0 +1,44 @@
+.main{
+    flex-direction: column;
+    color: white ;
+    height:40vw;
+}
+.userip{
+    text-transform: initial;
+    letter-spacing: 1px;
+    font-size: 12px;
+}
+.title{
+    margin-left: 29%;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 14px;
+}
+.block{
+    display: grid;
+}
+.val{
+    font-size: 3rem;
+}
+.text{
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+.colon{
+    font-size: 3rem;
+    padding-bottom: 2rem;
+}
+.meridiem{
+    margin-top: 26%;
+}
+/* fav tz */
+[data-status='heart'] {
+	width: 2rem;
+    animation: pulse 1s linear infinite;
+	transform-origin: center;
+}
+@keyframes pulse{
+    0%{transform:scale(1);}
+    40%{transform:scale(1.3);}
+    100%{transform:scale(1);}
+}
