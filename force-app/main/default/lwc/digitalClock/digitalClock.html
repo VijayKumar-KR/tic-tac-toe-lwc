@@ -1,15 +1,9 @@
 <template>
     <div class="main" style={backgroundStyle}>
         <!-- Title -->
-        <lightning-layout class="slds-align_absolute-center">
-            <lightning-layout-item class="title" padding="around-medium">
-                WORLD CLOCK
-            </lightning-layout-item>
-        </lightning-layout>
-        <!-- Row -->
-        <lightning-layout multiple-rows>
+        <lightning-layout class="" multiple-rows style="background-color: dodgerblue;">
             <!-- IP details -->
-            <lightning-layout-item class="userip" padding="around-small" size="12" small-device-size="6" medium-device-size="5" large-device-size="7">
+            <lightning-layout-item class="userip" padding="around-medium">
                 <lightning-layout>
                     <b>Your Details:</b>
                 </lightning-layout>
@@ -26,26 +20,12 @@
                     <b>Loc:</b> {ipinfo.loc}
                 </lightning-layout>
             </lightning-layout-item>
-            <!-- List TimeZone -->
-            <lightning-layout-item alignment-bump="left" padding="around-small" size="2" small-device-size="6" medium-device-size="2" large-device-size="1">
-                <lightning-icon icon-name="action:refresh" 
-                                alternative-text="Refresh" 
-                                title="Refresh" 
-                                size="x-small" 
-                                onclick={handleDefaultTz}
-                                class="refreshtz"></lightning-icon>
-            </lightning-layout-item>
-            <lightning-layout-item padding="around-small" size="10" small-device-size="6" medium-device-size="2" large-device-size="2">
-                Select TimeZone 
-                <lightning-combobox style="width: 16rem; color:black"
-                                    name="Select Time Zone"
-                                    value={timezone}
-                                    placeholder="Select Time Zone"
-                                    options={options}
-                                    onchange={handleChangeLevel}></lightning-combobox>
+            <!-- title -->
+            <lightning-layout-item class="title" padding="around-medium">
+                WORLD CLOCK
             </lightning-layout-item>
             <!-- time format toggle -->
-            <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="2" large-device-size="1">
+            <lightning-layout-item alignment-bump="left" padding="around-medium">
                 <lightning-input data-id="toggle" 
                                     class="textInput"
                                     type="toggle" 
@@ -57,11 +37,305 @@
                                     variant="label-hidden"></lightning-input>
             </lightning-layout-item>
         </lightning-layout>
+        <!-- Row -->
+        <!-- <lightning-layout-item padding="around-small" size="10" small-device-size="6" medium-device-size="2" large-device-size="2">
+            Select TimeZone 
+            <lightning-combobox style="width: 16rem; color:black"
+                                name="Select Time Zone"
+                                value={timezone}
+                                placeholder="Select Time Zone"
+                                options={options}
+                                onchange={handleChangeLevel}></lightning-combobox>
+        </lightning-layout-item> -->
 
-        <!-- layout -->
-        <lightning-layout class="slds-align_absolute-center slds-p-around_medium" multiple-rows>
+        <!-- Time Card -->
+        <lightning-layout class="slds-align_absolute-center slds-p-around_medium" multiple-rows style="background-color: midnightblue;">
             <!-- box -->
-            <lightning-layout-item class="slds-box">
+            <lightning-layout-item class="slds-box" size="12" small-device-size="12" medium-device-size="4" large-device-size="4" padding="around-small">
+                <!-- time -->
+                <lightning-layout class="clock slds-text-align_center" style="margin-top: -9%;">
+                    <lightning-layout-item class="block" padding="around-small">
+                        <span class="val" data-id="hour"></span>
+                        <span class="text">Hour</span>
+                    </lightning-layout-item>
+                    <span class="colon slds-align_absolute-center" data-id="">:</span>
+                    <lightning-layout-item class="block" padding="around-small">
+                        <span class="val" data-id="min"></span>
+                        <span class="text">Minute</span>
+                    </lightning-layout-item>
+                    <span class="colon slds-align_absolute-center" data-id="">:</span>
+                    <lightning-layout-item class="block" padding="around-small" style="margin-right: 16%;">
+                        <span class="val" data-id="sec"></span>
+                        <span class="text">Seconds</span>
+                    </lightning-layout-item>
+                    <span class="meridiem" data-id="meridiem"></span>
+                </lightning-layout>
+                <!-- date / timezone -->
+                <lightning-layout multiple-rows class="slds-align_absolute-center">
+                    <lightning-layout-item class="">
+                            <lightning-formatted-date-time value={ipinfo.datetime} 
+                                                    year="numeric" 
+                                                    month="short" 
+                                                    day="numeric" 
+                                                    weekday="long"
+                                                    hour12="true"
+                                                    time-zone-name="long"
+                                                    time-zone={timezone}></lightning-formatted-date-time>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+        </lightning-layout>
+
+        <!-- Time Card -->
+        <lightning-layout class="slds-align_absolute-center slds-p-around_medium" multiple-rows style="background-color: black;">
+            <!-- box -->
+            <lightning-layout-item class="slds-box" size="12" small-device-size="12" medium-device-size="4" large-device-size="4" padding="around-medium">
+                <!-- time -->
+                <lightning-layout class="clock slds-text-align_center" style="margin-top: -9%;">
+                    <lightning-layout-item class="block" padding="around-small">
+                        <span class="val" data-id="hour"></span>
+                        <span class="text">Hour</span>
+                    </lightning-layout-item>
+                    <span class="colon slds-align_absolute-center" data-id="">:</span>
+                    <lightning-layout-item class="block" padding="around-small">
+                        <span class="val" data-id="min"></span>
+                        <span class="text">Minute</span>
+                    </lightning-layout-item>
+                    <span class="colon slds-align_absolute-center" data-id="">:</span>
+                    <lightning-layout-item class="block" padding="around-small" style="margin-right: 16%;">
+                        <span class="val" data-id="sec"></span>
+                        <span class="text">Seconds</span>
+                    </lightning-layout-item>
+                    <svg viewBox="467 392 58 57" 
+                        xmlns="http://www.w3.org/2000/svg" data-status="heart" style="margin: -8%;margin-bottom: 4%;">
+                        <g fill="none" fill-rule="evenodd" transform="translate(467 392)">
+                            <path d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 
+                                    21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z" fill="red">
+                            </path>
+                        </g>
+                    </svg>
+                    <span class="meridiem" data-id="meridiem"></span>
+                </lightning-layout>
+                <!-- date / timezone -->
+                <lightning-layout multiple-rows class="slds-align_absolute-center">
+                    <lightning-layout-item class="">
+                            <lightning-formatted-date-time value={ipinfo.datetime} 
+                                                    year="numeric" 
+                                                    month="short" 
+                                                    day="numeric" 
+                                                    weekday="long"
+                                                    hour12="true"
+                                                    time-zone-name="long"
+                                                    time-zone={timezone}></lightning-formatted-date-time>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            <lightning-layout-item class="slds-box" size="12" small-device-size="12" medium-device-size="4" large-device-size="4" padding="around-medium">
+                <!-- time -->
+                <lightning-layout class="clock slds-text-align_center" style="margin-top: -9%;">
+                    <lightning-layout-item class="block" padding="around-small">
+                        <span class="val" data-id="hour"></span>
+                        <span class="text">Hour</span>
+                    </lightning-layout-item>
+                    <span class="colon slds-align_absolute-center" data-id="">:</span>
+                    <lightning-layout-item class="block" padding="around-small">
+                        <span class="val" data-id="min"></span>
+                        <span class="text">Minute</span>
+                    </lightning-layout-item>
+                    <span class="colon slds-align_absolute-center" data-id="">:</span>
+                    <lightning-layout-item class="block" padding="around-small" style="margin-right: 16%;">
+                        <span class="val" data-id="sec"></span>
+                        <span class="text">Seconds</span>
+                    </lightning-layout-item>
+                    <svg viewBox="467 392 58 57" 
+                        xmlns="http://www.w3.org/2000/svg" data-status="heart" style="margin: -8%;margin-bottom: 4%;">
+                        <g fill="none" fill-rule="evenodd" transform="translate(467 392)">
+                            <path d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 
+                                    21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z" fill="red">
+                            </path>
+                        </g>
+                    </svg>
+                    <span class="meridiem" data-id="meridiem"></span>
+                </lightning-layout>
+                <!-- date / timezone -->
+                <lightning-layout multiple-rows class="slds-align_absolute-center">
+                    <lightning-layout-item class="">
+                            <lightning-formatted-date-time value={ipinfo.datetime} 
+                                                    year="numeric" 
+                                                    month="short" 
+                                                    day="numeric" 
+                                                    weekday="long"
+                                                    hour12="true"
+                                                    time-zone-name="long"
+                                                    time-zone={timezone}></lightning-formatted-date-time>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            <lightning-layout-item class="slds-box" size="12" small-device-size="12" medium-device-size="4" large-device-size="4" padding="around-medium">
+                <!-- time -->
+                <lightning-layout class="clock slds-text-align_center" style="margin-top: -9%;">
+                    <lightning-layout-item class="block" padding="around-small">
+                        <span class="val" data-id="hour"></span>
+                        <span class="text">Hour</span>
+                    </lightning-layout-item>
+                    <span class="colon slds-align_absolute-center" data-id="">:</span>
+                    <lightning-layout-item class="block" padding="around-small">
+                        <span class="val" data-id="min"></span>
+                        <span class="text">Minute</span>
+                    </lightning-layout-item>
+                    <span class="colon slds-align_absolute-center" data-id="">:</span>
+                    <lightning-layout-item class="block" padding="around-small" style="margin-right: 16%;">
+                        <span class="val" data-id="sec"></span>
+                        <span class="text">Seconds</span>
+                    </lightning-layout-item>
+                    <svg viewBox="467 392 58 57" 
+                        xmlns="http://www.w3.org/2000/svg" data-status="heart" style="margin: -8%;margin-bottom: 4%;">
+                        <g fill="none" fill-rule="evenodd" transform="translate(467 392)">
+                            <path d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 
+                                    21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z" fill="red">
+                            </path>
+                        </g>
+                    </svg>
+                    <span class="meridiem" data-id="meridiem"></span>
+                </lightning-layout>
+                <!-- date / timezone -->
+                <lightning-layout multiple-rows class="slds-align_absolute-center">
+                    <lightning-layout-item class="">
+                            <lightning-formatted-date-time value={ipinfo.datetime} 
+                                                    year="numeric" 
+                                                    month="short" 
+                                                    day="numeric" 
+                                                    weekday="long"
+                                                    hour12="true"
+                                                    time-zone-name="long"
+                                                    time-zone={timezone}></lightning-formatted-date-time>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            <lightning-layout-item class="slds-box" size="12" small-device-size="12" medium-device-size="4" large-device-size="4" padding="around-medium">
+                <!-- time -->
+                <lightning-layout class="clock slds-text-align_center" style="margin-top: -9%;">
+                    <lightning-layout-item class="block" padding="around-small">
+                        <span class="val" data-id="hour"></span>
+                        <span class="text">Hour</span>
+                    </lightning-layout-item>
+                    <span class="colon slds-align_absolute-center" data-id="">:</span>
+                    <lightning-layout-item class="block" padding="around-small">
+                        <span class="val" data-id="min"></span>
+                        <span class="text">Minute</span>
+                    </lightning-layout-item>
+                    <span class="colon slds-align_absolute-center" data-id="">:</span>
+                    <lightning-layout-item class="block" padding="around-small" style="margin-right: 16%;">
+                        <span class="val" data-id="sec"></span>
+                        <span class="text">Seconds</span>
+                    </lightning-layout-item>
+                    <svg viewBox="467 392 58 57" 
+                        xmlns="http://www.w3.org/2000/svg" data-status="heart" style="margin: -8%;margin-bottom: 4%;">
+                        <g fill="none" fill-rule="evenodd" transform="translate(467 392)">
+                            <path d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 
+                                    21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z" fill="red">
+                            </path>
+                        </g>
+                    </svg>
+                    <span class="meridiem" data-id="meridiem"></span>
+                </lightning-layout>
+                <!-- date / timezone -->
+                <lightning-layout multiple-rows class="slds-align_absolute-center">
+                    <lightning-layout-item class="">
+                            <lightning-formatted-date-time value={ipinfo.datetime} 
+                                                    year="numeric" 
+                                                    month="short" 
+                                                    day="numeric" 
+                                                    weekday="long"
+                                                    hour12="true"
+                                                    time-zone-name="long"
+                                                    time-zone={timezone}></lightning-formatted-date-time>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            <lightning-layout-item class="slds-box" size="12" small-device-size="12" medium-device-size="4" large-device-size="4" padding="around-medium">
+                <!-- time -->
+                <lightning-layout class="clock slds-text-align_center" style="margin-top: -9%;">
+                    <lightning-layout-item class="block" padding="around-small">
+                        <span class="val" data-id="hour"></span>
+                        <span class="text">Hour</span>
+                    </lightning-layout-item>
+                    <span class="colon slds-align_absolute-center" data-id="">:</span>
+                    <lightning-layout-item class="block" padding="around-small">
+                        <span class="val" data-id="min"></span>
+                        <span class="text">Minute</span>
+                    </lightning-layout-item>
+                    <span class="colon slds-align_absolute-center" data-id="">:</span>
+                    <lightning-layout-item class="block" padding="around-small" style="margin-right: 16%;">
+                        <span class="val" data-id="sec"></span>
+                        <span class="text">Seconds</span>
+                    </lightning-layout-item>
+                    <svg viewBox="467 392 58 57" 
+                        xmlns="http://www.w3.org/2000/svg" data-status="heart" style="margin: -8%;margin-bottom: 4%;">
+                        <g fill="none" fill-rule="evenodd" transform="translate(467 392)">
+                            <path d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 
+                                    21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z" fill="red">
+                            </path>
+                        </g>
+                    </svg>
+                    <span class="meridiem" data-id="meridiem"></span>
+                </lightning-layout>
+                <!-- date / timezone -->
+                <lightning-layout multiple-rows class="slds-align_absolute-center">
+                    <lightning-layout-item class="">
+                            <lightning-formatted-date-time value={ipinfo.datetime} 
+                                                    year="numeric" 
+                                                    month="short" 
+                                                    day="numeric" 
+                                                    weekday="long"
+                                                    hour12="true"
+                                                    time-zone-name="long"
+                                                    time-zone={timezone}></lightning-formatted-date-time>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            <lightning-layout-item class="slds-box" size="12" small-device-size="12" medium-device-size="4" large-device-size="4" padding="around-medium">
+                <!-- time -->
+                <lightning-layout class="clock slds-text-align_center" style="margin-top: -9%;">
+                    <lightning-layout-item class="block" padding="around-small">
+                        <span class="val" data-id="hour"></span>
+                        <span class="text">Hour</span>
+                    </lightning-layout-item>
+                    <span class="colon slds-align_absolute-center" data-id="">:</span>
+                    <lightning-layout-item class="block" padding="around-small">
+                        <span class="val" data-id="min"></span>
+                        <span class="text">Minute</span>
+                    </lightning-layout-item>
+                    <span class="colon slds-align_absolute-center" data-id="">:</span>
+                    <lightning-layout-item class="block" padding="around-small" style="margin-right: 16%;">
+                        <span class="val" data-id="sec"></span>
+                        <span class="text">Seconds</span>
+                    </lightning-layout-item>
+                    <svg viewBox="467 392 58 57" 
+                        xmlns="http://www.w3.org/2000/svg" data-status="heart" style="margin: -8%;margin-bottom: 4%;">
+                        <g fill="none" fill-rule="evenodd" transform="translate(467 392)">
+                            <path d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 
+                                    21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z" fill="red">
+                            </path>
+                        </g>
+                    </svg>
+                    <span class="meridiem" data-id="meridiem"></span>
+                </lightning-layout>
+                <!-- date / timezone -->
+                <lightning-layout multiple-rows class="slds-align_absolute-center">
+                    <lightning-layout-item class="">
+                            <lightning-formatted-date-time value={ipinfo.datetime} 
+                                                    year="numeric" 
+                                                    month="short" 
+                                                    day="numeric" 
+                                                    weekday="long"
+                                                    hour12="true"
+                                                    time-zone-name="long"
+                                                    time-zone={timezone}></lightning-formatted-date-time>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            <lightning-layout-item class="slds-box" size="12" small-device-size="12" medium-device-size="4" large-device-size="4" padding="around-medium">
                 <!-- time -->
                 <lightning-layout class="clock slds-text-align_center" style="margin-top: -9%;">
                     <lightning-layout-item class="block" padding="around-small">

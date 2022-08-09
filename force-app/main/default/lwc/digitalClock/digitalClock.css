@@ -11,6 +11,7 @@
     text-transform: uppercase;
     letter-spacing: 4px;
     font-size: 14px;
+    margin-left: 28%;
 }
 .block{
     display: grid;
