@@ -50,6 +50,11 @@ export default class DigitalClock extends LightningElement {
         clearInterval(this.timer);
     }
 
+    // set to default TZ
+    handleDefaultTz(){
+        this.timezone = 'Asia/Kolkata';
+    }
+
     // fetch current user ip details
     async getUserIp(){
         await fetch(IPINFO_API_URL+'?token='+IPINFO_API)

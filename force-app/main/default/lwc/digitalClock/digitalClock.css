@@ -1,7 +1,6 @@
 .main{
-    flex-direction: column;
-    color: white ;
-    /* height:40vw; */
+    color: white;
+    background-position: bottom;
 }
 .userip{
     text-transform: initial;
@@ -27,6 +26,11 @@
     font-size: 3rem;
     padding-bottom: 2rem;
 }
+.refreshtz{
+    cursor: pointer;
+    margin-left: 70%;
+    margin-top: 53%;
+}
 /* AM/PM */
 .meridiem{
     margin-top: 25%;
@@ -45,4 +49,25 @@
 /* 12/24 */
 .textInput{
     -webkit-text-fill-color: white;
+}
+/* CSS to apply screens which are above 500px and below 1025px*/
+@media (min-width: 850px) and (max-width: 1025px){
+    .refreshtz{
+        margin-left: 85%;
+        margin-top: 27%;
+    }
+}
+/* CSS to apply screens which are above 500px and below 1025px*/
+@media (min-width: 480px) and (max-width: 850px){
+    .refreshtz{
+        margin-left: 85%;
+        margin-top: 27%;
+    }
+}
+/* CSS to apply screens which are below 500px */
+@media screen and (max-width: 480px){
+    .refreshtz{
+        margin-left: 0%;
+        margin-top: 95%;
+    }
 }

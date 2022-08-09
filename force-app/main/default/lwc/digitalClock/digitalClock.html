@@ -3,13 +3,13 @@
         <!-- Title -->
         <lightning-layout class="slds-align_absolute-center">
             <lightning-layout-item class="title" padding="around-medium">
-                DIGITAL CLOCK
+                WORLD CLOCK
             </lightning-layout-item>
         </lightning-layout>
         <!-- Row -->
         <lightning-layout multiple-rows>
             <!-- IP details -->
-            <lightning-layout-item class="userip" padding="around-small" size="12" small-device-size="6" medium-device-size="6" large-device-size="9">
+            <lightning-layout-item class="userip" padding="around-small" size="12" small-device-size="6" medium-device-size="5" large-device-size="7">
                 <lightning-layout>
                     <b>Your Details:</b>
                 </lightning-layout>
@@ -27,7 +27,15 @@
                 </lightning-layout>
             </lightning-layout-item>
             <!-- List TimeZone -->
-            <lightning-layout-item alignment-bump="left" padding="around-small" size="12" small-device-size="6" medium-device-size="3" large-device-size="2">
+            <lightning-layout-item alignment-bump="left" padding="around-small" size="2" small-device-size="6" medium-device-size="2" large-device-size="1">
+                <lightning-icon icon-name="action:refresh" 
+                                alternative-text="Refresh" 
+                                title="Refresh" 
+                                size="x-small" 
+                                onclick={handleDefaultTz}
+                                class="refreshtz"></lightning-icon>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small" size="10" small-device-size="6" medium-device-size="2" large-device-size="2">
                 Select TimeZone 
                 <lightning-combobox style="width: 16rem; color:black"
                                     name="Select Time Zone"
