@@ -51,7 +51,7 @@
         <!-- Time Card -->
         <lightning-layout class="slds-align_absolute-center slds-p-around_medium" multiple-rows style="background-color: midnightblue;">
             <!-- box -->
-            <lightning-layout-item class="slds-box" size="12" small-device-size="12" medium-device-size="4" large-device-size="4" padding="around-small">
+            <lightning-layout-item style="width: 22rem;" class="slds-box" size="12" small-device-size="12" medium-device-size="4" large-device-size="4" padding="around-small">
                 <!-- time -->
                 <lightning-layout class="clock slds-text-align_center" style="margin-top: -9%;">
                     <lightning-layout-item class="block" padding="around-small">
@@ -64,7 +64,7 @@
                         <span class="text">Minute</span>
                     </lightning-layout-item>
                     <span class="colon slds-align_absolute-center" data-id="">:</span>
-                    <lightning-layout-item class="block" padding="around-small" style="margin-right: 16%;">
+                    <lightning-layout-item class="block" padding="around-small">
                         <span class="val" data-id="sec"></span>
                         <span class="text">Seconds</span>
                     </lightning-layout-item>
@@ -73,14 +73,17 @@
                 <!-- date / timezone -->
                 <lightning-layout multiple-rows class="slds-align_absolute-center">
                     <lightning-layout-item class="">
-                            <lightning-formatted-date-time value={ipinfo.datetime} 
-                                                    year="numeric" 
-                                                    month="short" 
-                                                    day="numeric" 
-                                                    weekday="long"
-                                                    hour12="true"
-                                                    time-zone-name="long"
-                                                    time-zone={timezone}></lightning-formatted-date-time>
+                        <img class="flag" data-id="flag" src={ipinfo.countryflag} alt="Flag">
+                    </lightning-layout-item>
+                    <lightning-layout-item class="">
+                        <lightning-formatted-date-time value={ipinfo.datetime} 
+                                                year="numeric" 
+                                                month="short" 
+                                                day="numeric" 
+                                                weekday="long"
+                                                hour12="true"
+                                                time-zone-name="long"
+                                                time-zone={timezone}></lightning-formatted-date-time>
                     </lightning-layout-item>
                 </lightning-layout>
             </lightning-layout-item>

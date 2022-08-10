@@ -6,6 +6,8 @@ const WORLD_API_URL = 'http://worldtimeapi.org';
 const IPINFO_API_URL = 'https://ipinfo.io';
 // ipinfoapitoken
 const IPINFO_API = 'cc10f9e8099421';
+// countryFlags_API
+const COUNTRY_FLAGS_API = 'https://countryflagsapi.com';
 
 export default class DigitalClock extends LightningElement {
 
@@ -67,10 +69,34 @@ export default class DigitalClock extends LightningElement {
             }
         })
         .then(ipinfo => {
-                this.ipinfo = ipinfo;
+            this.ipinfo = ipinfo;
+            this.getCountryFlag(this.ipinfo.country);
         })
         .catch(error => console.log('error in getUserIp: ',error))
     }
+
+    //
+    async getCountryFlag(code){
+        await fetch(COUNTRY_FLAGS_API+'/svg/'+code)
+        .then(response => {
+            console.log('response: ',response);
+            if(response.ok) {
+                console.log('response.blob(): ',response.blob());
+                return response.blob();
+            } 
+            else {
+                throw Error(response);
+            }
+        })
+        .then(imageBlob => {
+            console.log('imageBlob: ',imageBlob);
+            // Then create a local URL for that image and print it 
+    //   const imageObjectURL = URL.createObjectURL(imageBlob);
+    //         console.log('flag: ',imageObjectURL);
+    //         this.ipinfo.countryflag = imageObjectURL;
+        })
+        .catch(error => console.log('error in getCountryFlag: ',error))
+    } 
 
     // fetch all timezone names
     async getAllTimeZone(){
