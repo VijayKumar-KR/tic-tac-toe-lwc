@@ -11,7 +11,18 @@
     text-transform: uppercase;
     letter-spacing: 4px;
     font-size: 14px;
-    margin-left: 28%;
+    margin-left: 30%;
+}
+.fav{
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 14px;
+    margin-left: 45%;
+}
+.addicon{
+    transform: rotate(45deg);
+    cursor: pointer;
+    background-color: red;
 }
 .block{
     display: grid;
@@ -70,5 +81,8 @@
     .refreshtz{
         margin-left: 0%;
         margin-top: 95%;
+    }
+    .fav{
+        margin-left: 28%;
     }
 }

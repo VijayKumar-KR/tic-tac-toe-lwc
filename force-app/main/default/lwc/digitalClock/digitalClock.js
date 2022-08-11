@@ -24,6 +24,8 @@ export default class DigitalClock extends LightningElement {
     options = []
     // computer turn var
     timezone = 'Asia/Kolkata';
+    // favlist
+    favtimes = []
 
     // set background image
     get backgroundStyle() {
@@ -43,7 +45,7 @@ export default class DigitalClock extends LightningElement {
             this.getAllTimeZone();
         }
         this.timer = setInterval(() => {
-            this.setDateTime();
+            this.getCurrentDateTime();
         }, 1000);
     }
 
@@ -125,25 +127,60 @@ export default class DigitalClock extends LightningElement {
         this.timezone = event.detail.value;
     }
 
+    selectedfavtz = []
     // set time and date
-    setDateTime(){
-        let date = new Date(new Date().toLocaleString("en-US", {timeZone: this.timezone}));
+    getCurrentDateTime(){
+        this.setDateTime('hour', 'min', 'sec', 'meridiem', this.timezone);
+        this.selectedfavtz = ['America/Costa_Rica', 'America/Indiana/Marengo', 'Europe/Simferopol', 'Indian/Christmas', 'Pacific/Kosrae', 'Pacific/Wallis'];
+        this.favtimes = []
+        if(this.selectedfavtz.length){
+            for (let i = 0; i < this.selectedfavtz.length; i++) {
+                this.favtimes.push(this.getFavTimes(this.selectedfavtz[i]));
+            }
+            this.template.querySelector('c-fav-time-card').favtimeclocks(this.favtimes);
+        }
+    }
+
+    setDateTime(hour_id, min_id, sec_id, meri_id, tz){
+        let date = new Date(new Date().toLocaleString("en-US", {timeZone: tz}));
         // timestamp
         this.ipinfo.datetime = date.getTime();
         let h = date.getHours();
         // Convert 24hr into 12 and if 12PM % 12 then keep val as 12 instead 0
         let hrval
-        if(h != 12)
-        hrval = this.timeformat === 12 ? h % 12 : h;
+        if(h != 12){
+            hrval = this.timeformat === 12 ? h % 12 : h;
+        }else{
+            hrval = 12;
+        }  
+        let meridiem = h < 12 ? 'AM' : 'PM'; 
         // hour
-        this.template.querySelector('[data-id=hour]').textContent = this.getformat(hrval);
+        this.template.querySelector('[data-id='+hour_id+']').textContent = this.getformat(hrval);
         // minute
-        this.template.querySelector('[data-id=min]').textContent = this.getformat(date.getMinutes());
+        this.template.querySelector('[data-id='+min_id+']').textContent = this.getformat(date.getMinutes());
         // seconds
-        this.template.querySelector('[data-id=sec]').textContent = this.getformat(date.getSeconds());
+        this.template.querySelector('[data-id='+sec_id+']').textContent = this.getformat(date.getSeconds());
         //meridiem
-        let meridiem = h < 12 ? 'AM' : 'PM';
-        this.template.querySelector('[data-id=meridiem]').textContent = meridiem;
+        this.template.querySelector('[data-id='+meri_id+']').textContent = meridiem;
+    }
+
+    getFavTimes(tz){
+        let date = new Date(new Date().toLocaleString("en-US", {timeZone: tz}));
+        let h = date.getHours();
+        // Convert 24hr into 12 and if 12PM % 12 then keep val as 12 instead 0
+        let hrval
+        if(h != 12){
+            hrval = this.timeformat === 12 ? h % 12 : h;
+        }else{
+            hrval = 12;
+        }   
+        let meridiem = h < 12 ? 'AM' : 'PM'; 
+        return {hour: this.getformat(hrval), 
+                min: this.getformat(date.getMinutes()), 
+                sec: this.getformat(date.getSeconds()), 
+                tz: tz, 
+                meri: meridiem,
+                timestamp: date.getTime()};
     }
 
     // add 0 to single digit hour/minute

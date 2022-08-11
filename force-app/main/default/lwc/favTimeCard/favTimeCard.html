@@ -1,0 +1,54 @@
+<template>
+    <lightning-layout class="slds-p-around_small" multiple-rows style="background-color: black;">
+        <template for:each={favtimes} for:item="time">
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="4" large-device-size="4" padding="around-medium" key={time.tz}>
+                <div class="slds-box">
+                    <!-- time -->
+                    <lightning-layout class="slds-text-align_center" style="margin-top: -9%;">
+                        <lightning-layout-item class="block" padding="around-small">
+                            <span class="val" data-id="hour-2">{time.hour}</span>
+                            <span class="text">Hour</span>
+                        </lightning-layout-item>
+                        <span class="colon slds-align_absolute-center" data-id="">:</span>
+                        <lightning-layout-item class="block" padding="around-small">
+                            <span class="val" data-id="min-2">{time.min}</span>
+                            <span class="text">Minute</span>
+                        </lightning-layout-item>
+                        <span class="colon slds-align_absolute-center" data-id="">:</span>
+                        <lightning-layout-item class="block" padding="around-small" style="margin-right: -6%;">
+                            <span class="val" data-id="sec-2">{time.sec}</span>
+                            <span class="text">Seconds</span>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="block" padding="around-small">
+                            <lightning-layout multiple-rows>
+                                <lightning-layout-item class="block" padding="around-small">
+                                    <lightning-icon icon-name="utility:close" 
+                                                    alternative-text="close!" 
+                                                    title="Close" 
+                                                    size="x-small" 
+                                                    style="cursor: pointer;"></lightning-icon>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <lightning-layout-item class="block" padding="around-small">
+                                <span class="" data-id="meridiem-2">{time.meri}</span>
+                            </lightning-layout-item>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                    <!-- date / timezone -->
+                    <lightning-layout multiple-rows class="slds-align_absolute-center" style="letter-spacing: 1px;">
+                        <lightning-layout-item class="">
+                                <lightning-formatted-date-time value={time.timestamp} 
+                                                        year="numeric" 
+                                                        month="short" 
+                                                        day="numeric" 
+                                                        weekday="long"
+                                                        hour12="true"
+                                                        time-zone-name="long"
+                                                        time-zone={time.tz}></lightning-formatted-date-time>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+            </lightning-layout-item>
+        </template>
+    </lightning-layout>
+</template>
