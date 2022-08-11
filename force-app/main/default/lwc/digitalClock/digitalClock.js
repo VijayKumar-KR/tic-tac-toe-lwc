@@ -34,8 +34,10 @@ export default class DigitalClock extends LightningElement {
     // fav selection modal
     modalTemplate = false
     // selected timezone val from modal
+    selectedtimer
     selectedFavTimeZoneList = []
     selectedTimeZoneObj = {}
+    selectedFavTime = ''
 
     // set background image
     get backgroundStyle() {
@@ -50,6 +52,12 @@ export default class DigitalClock extends LightningElement {
     }
 
     connectedCallback(){
+        // current user timezone
+        this.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        if(this.timezone == 'Asia/Calcutta'){
+            this.timezone = 'Asia/Kolkata';
+        }
+        console.log('this.timezone: ', this.timezone);
         if(!this.options.length){
             this.getUserIp();
             this.getAllTimeZone();
@@ -62,6 +70,7 @@ export default class DigitalClock extends LightningElement {
     // destroy timer
     disconnectedCallback() {
         clearInterval(this.timer);
+        clearInterval(this.selectedtimer);
     }
 
     // set to default TZ
@@ -127,44 +136,51 @@ export default class DigitalClock extends LightningElement {
                     const option = { label: ele, value: ele};
                     this.options.push(option);
                 }); 
-                console.log('options: ', this.options);
             })
             .catch(error => console.log('error in getAllTimeZone: ',error))
     }
 
     handleModalPopUp(){
+        // destroy timer of selected timezone in modal popup
+        clearInterval(this.selectedtimer);
         this.selectedTimeZoneObj = {};
         this.modalTemplate = !this.modalTemplate;
     }
 
     // selected timezone value
     handleChangeLevel(event){
-        let selectedtimezone = event.detail.value;
-        this.selectedFavTimeZoneList.push(selectedtimezone)
-        this.selectedTimeZoneObj = this.getFavTimes(selectedtimezone);
-        console.log('selectedFavTimeZoneList: ', this.selectedFavTimeZoneList);
-        console.log('selectedTimeZoneObj: ', this.selectedTimeZoneObj);
+        this.selectedFavTime = event.detail.value;
+        this.selectedtimer = setInterval(() => {
+            this.selectedTimeZoneObj = this.getFavTimes(this.selectedFavTime);
+        }, 1000);
+    }
+
+    handleAddFavTime(){
+        this.selectedFavTimeZoneList.push(this.selectedFavTime);
+        localStorage.setItem('favList', JSON.stringify(this.selectedFavTimeZoneList));
+        this.handleModalPopUp();
     }
     
     // set time and date
     getCurrentDateTime(){
         this.setDateTime('hour', 'min', 'sec', 'meridiem', this.timezone);
         this.favtimes = []
-        if(this.selectedFavTimeZoneList){
-            for (let i = 0; i < this.selectedFavTimeZoneList.length; i++) {
-                this.favtimes.push(this.getFavTimes(this.selectedFavTimeZoneList[i]));
+        if(localStorage.getItem('favList')){
+            this.selectedFavTimeZoneList = JSON.parse(localStorage.getItem('favList'));
+            if(this.selectedFavTimeZoneList){
+                for (let i = 0; i < this.selectedFavTimeZoneList.length; i++) {
+                    this.favtimes.push(this.getFavTimes(this.selectedFavTimeZoneList[i]));
+                }
+                this.template.querySelector('c-fav-time-card').favtimeclocks(this.favtimes);
             }
-            this.template.querySelector('c-fav-time-card').favtimeclocks(this.favtimes);
         }
     }
 
     updateFavTimeList(event){
         let index = event.detail;
-        console.log('index: ', index);
-        console.log('selectedFavTimeZoneList: ', this.selectedFavTimeZoneList);
         this.selectedFavTimeZoneList.splice(index, 1);
-        console.log('AAA: ', this.selectedFavTimeZoneList);
         this.selectedFavTimeZoneList = [...this.selectedFavTimeZoneList];
+        localStorage.setItem('favList', JSON.stringify(this.selectedFavTimeZoneList));
     }
 
     setDateTime(hour_id, min_id, sec_id, meri_id, tz){
