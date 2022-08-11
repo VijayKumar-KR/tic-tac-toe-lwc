@@ -1,0 +1,45 @@
+<template>
+    <div class="slds-show">
+        <div class="modal-glass slds-backdrop fadein slds-backdrop--open" style="opacity: 0.8;"></div>
+        <div class="panel slds-modal slds-fade-in-open" style="opacity: 1;">
+            <div class="modal-container slds-modal__container">
+                <div class="modal-header slds-modal__header empty slds-modal__header--empty" style="padding: 0;border-bottom: 0;">
+                    <lightning-button-icon icon-name="utility:close"
+                                            class="slds-button slds-modal__close closeIcon slds-button_icon-bare slds-button_icon-inverse" 
+                                            alternative-text="close" 
+                                            size="large" 
+                                            variant="bare" 
+                                            title="Close"
+                                            onclick={handleModalPopUp}></lightning-button-icon>
+                </div>
+                <div class="modal-body scrollable slds-modal__content slds-p-around--medium">
+                    <div class="detail">
+                        <lightning-layout class="slds-align_absolute-center slds-p-around_small">
+                            <lightning-layout-item padding="around-small">
+                                Select TimeZone 
+                                <lightning-combobox style="width: 16rem; color:black"
+                                                    name="Select Time Zone"
+                                                    value={timezone}
+                                                    placeholder="Select Time Zone"
+                                                    options={options}
+                                                    onchange={handleChangeLevel}></lightning-combobox>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                        <lightning-layout if:true={selectedTimeZoneObj} class="slds-align_absolute-center slds-p-around_small">
+                            <lightning-layout-item padding="around-small">
+                                <c-time-card time={selectedTimeZoneObj}></c-time-card>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                </div>
+                <div class="modal-footer slds-modal__footer">
+                    <div class="forceModalActionContainer--footerAction forceModalActionContainer">
+                        <button onclick={handleModalPopUp} class="slds-button slds-button--brand uiButton" style="background-color: #0176d3;">
+                            <span class="label bBody">Add To Favourite</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

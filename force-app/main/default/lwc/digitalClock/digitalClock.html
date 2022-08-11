@@ -86,14 +86,7 @@
                 favourites
             </lightning-layout-item>
             <lightning-layout-item alignment-bump="left" padding="around-small">
-                <!-- Select TimeZone 
-                <lightning-combobox style="width: 16rem; color:black"
-                                    name="Select Time Zone"
-                                    value={timezone}
-                                    placeholder="Select Time Zone"
-                                    options={options}
-                                    onchange={handleChangeLevel}></lightning-combobox> -->
-                <lightning-icon icon-name="action:close" alternative-text="Add" title="Add" size="small" class="addicon"></lightning-icon>
+                <lightning-icon icon-name="action:close" alternative-text="Add" title="Add" size="small" class="addicon" onclick={handleModalPopUp}></lightning-icon>
             </lightning-layout-item>
         </lightning-layout>
 

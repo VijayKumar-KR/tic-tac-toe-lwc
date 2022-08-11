@@ -7,4 +7,8 @@ export default class FavTimeCard extends LightningElement  {
     favtimeclocks(favtime){
         this.favtimes = favtime;
     }
+
+    handleRemoveFavTime(){
+        
+    }
 }

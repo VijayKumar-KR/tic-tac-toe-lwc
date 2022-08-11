@@ -1,5 +1,10 @@
 import { LightningElement, track } from 'lwc';
+//background
 import digitalclockback from '@salesforce/resourceUrl/digitalclockback';
+// render templates
+import digitalClock from './digitalClock.html';
+import timeZoneModal from './timeZoneModal.html';
+
 // worldtimeapi
 const WORLD_API_URL = 'http://worldtimeapi.org';
 // ipinfoapi
@@ -26,6 +31,11 @@ export default class DigitalClock extends LightningElement {
     timezone = 'Asia/Kolkata';
     // favlist
     favtimes = []
+    // fav selection modal
+    modalTemplate = false
+    // selected timezone val from modal
+    selectedFavTimeZoneList = []
+    selectedTimeZoneObj = {}
 
     // set background image
     get backgroundStyle() {
@@ -122,20 +132,27 @@ export default class DigitalClock extends LightningElement {
             .catch(error => console.log('error in getAllTimeZone: ',error))
     }
 
-    // selected timezone value
-    handleChangeLevel(event){
-        this.timezone = event.detail.value;
+    handleModalPopUp(){
+        this.selectedTimeZoneObj = {};
+        this.modalTemplate = !this.modalTemplate;
     }
 
-    selectedfavtz = []
+    // selected timezone value
+    handleChangeLevel(event){
+        let selectedtimezone = event.detail.value;
+        this.selectedFavTimeZoneList.push(selectedtimezone)
+        this.selectedTimeZoneObj = this.getFavTimes(selectedtimezone);
+        console.log('selectedFavTimeZoneList: ', this.selectedFavTimeZoneList);
+        console.log('selectedTimeZoneObj: ', this.selectedTimeZoneObj);
+    }
+    
     // set time and date
     getCurrentDateTime(){
         this.setDateTime('hour', 'min', 'sec', 'meridiem', this.timezone);
-        this.selectedfavtz = ['America/Costa_Rica', 'America/Indiana/Marengo', 'Europe/Simferopol', 'Indian/Christmas', 'Pacific/Kosrae', 'Pacific/Wallis'];
         this.favtimes = []
-        if(this.selectedfavtz.length){
-            for (let i = 0; i < this.selectedfavtz.length; i++) {
-                this.favtimes.push(this.getFavTimes(this.selectedfavtz[i]));
+        if(this.selectedFavTimeZoneList.length){
+            for (let i = 0; i < this.selectedFavTimeZoneList.length; i++) {
+                this.favtimes.push(this.getFavTimes(this.selectedFavTimeZoneList[i]));
             }
             this.template.querySelector('c-fav-time-card').favtimeclocks(this.favtimes);
         }
@@ -186,5 +203,9 @@ export default class DigitalClock extends LightningElement {
     // add 0 to single digit hour/minute
     getformat(val){
         return val < 10 ? '0'+val : val;
+    }
+
+    render() {
+        return this.modalTemplate ? timeZoneModal : digitalClock;
     }
 }

@@ -1,0 +1,10 @@
+.block{
+    display: grid;
+}
+.val{
+    font-size: 3rem;
+}
+.text{
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
