@@ -8,7 +8,12 @@ export default class FavTimeCard extends LightningElement  {
         this.favtimes = favtime;
     }
 
-    handleRemoveFavTime(){
-        
+    handleRemoveFavTime(event){
+        let index = event.target.dataset.index;
+
+        // Creates the event with the favtimes data.
+        const selectedEvent = new CustomEvent('removed', { detail: index });
+        // Dispatches the event.
+        this.dispatchEvent(selectedEvent);
     }
 }

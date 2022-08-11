@@ -150,12 +150,21 @@ export default class DigitalClock extends LightningElement {
     getCurrentDateTime(){
         this.setDateTime('hour', 'min', 'sec', 'meridiem', this.timezone);
         this.favtimes = []
-        if(this.selectedFavTimeZoneList.length){
+        if(this.selectedFavTimeZoneList){
             for (let i = 0; i < this.selectedFavTimeZoneList.length; i++) {
                 this.favtimes.push(this.getFavTimes(this.selectedFavTimeZoneList[i]));
             }
             this.template.querySelector('c-fav-time-card').favtimeclocks(this.favtimes);
         }
+    }
+
+    updateFavTimeList(event){
+        let index = event.detail;
+        console.log('index: ', index);
+        console.log('selectedFavTimeZoneList: ', this.selectedFavTimeZoneList);
+        this.selectedFavTimeZoneList.splice(index, 1);
+        console.log('AAA: ', this.selectedFavTimeZoneList);
+        this.selectedFavTimeZoneList = [...this.selectedFavTimeZoneList];
     }
 
     setDateTime(hour_id, min_id, sec_id, meri_id, tz){

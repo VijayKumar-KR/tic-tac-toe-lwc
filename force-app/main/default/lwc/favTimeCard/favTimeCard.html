@@ -1,6 +1,6 @@
 <template>
     <lightning-layout class="slds-p-around_small" multiple-rows style="background-color: black;">
-        <template for:each={favtimes} for:item="time">
+        <template for:each={favtimes} for:item="time" for:index="index">
             <lightning-layout-item size="12" small-device-size="12" medium-device-size="4" large-device-size="4" padding="around-medium" key={time.tz}>
                 <div class="slds-box">
                     <!-- time -->
@@ -27,6 +27,8 @@
                                                     title="Close" 
                                                     size="x-small" 
                                                     style="cursor: pointer;"
+                                                    data-id={time.tz}
+                                                    data-index={index}
                                                     onclick={handleRemoveFavTime}></lightning-icon>
                                 </lightning-layout-item>
                             </lightning-layout>
