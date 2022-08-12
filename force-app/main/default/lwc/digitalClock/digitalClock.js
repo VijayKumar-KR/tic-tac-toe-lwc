@@ -57,7 +57,6 @@ export default class DigitalClock extends LightningElement {
         if(this.timezone == 'Asia/Calcutta'){
             this.timezone = 'Asia/Kolkata';
         }
-        console.log('this.timezone: ', this.timezone);
         if(!this.options.length){
             this.getUserIp();
             this.getAllTimeZone();
@@ -100,7 +99,6 @@ export default class DigitalClock extends LightningElement {
     async getCountryFlag(code){
         await fetch(COUNTRY_FLAGS_API+'/png/'+code)
         .then(response => {
-            console.log('response: ',response);
             if(response.ok) {
                 return response.blob();
             } 
@@ -109,10 +107,8 @@ export default class DigitalClock extends LightningElement {
             }
         })
         .then(imageBlob => {
-            console.log('imageBlob: ',imageBlob);
             // Then create a local URL for that image and print it 
-      const imageObjectURL = URL.createObjectURL(imageBlob);
-            console.log('flag: ',imageObjectURL);
+            const imageObjectURL = URL.createObjectURL(imageBlob);
             this.ipinfo.countryflag = imageObjectURL;
         })
         .catch(error => console.log('error in getCountryFlag: ',error))
@@ -146,12 +142,18 @@ export default class DigitalClock extends LightningElement {
         this.modalTemplate = !this.modalTemplate;
     }
 
-    // selected timezone value
-    handleChangeLevel(event){
-        this.selectedFavTime = event.detail.value;
+    // selected timezone value from Drop down
+    handleChangeTz(event){
+        this.selectedFavTime = event.detail.selectedTz;
         this.selectedtimer = setInterval(() => {
             this.selectedTimeZoneObj = this.getFavTimes(this.selectedFavTime);
         }, 1000);
+    }
+
+    // removed timezone from selected
+    handleRemoveTz(event){
+        this.selectedTimeZoneObj = {};
+        this.selectedFavTime = '';
     }
 
     handleAddFavTime(){
@@ -221,7 +223,8 @@ export default class DigitalClock extends LightningElement {
                 sec: this.getformat(date.getSeconds()), 
                 tz: tz, 
                 meri: meridiem,
-                timestamp: date.getTime()};
+                timestamp: date.getTime(),
+                flag: ''};
     }
 
     // add 0 to single digit hour/minute

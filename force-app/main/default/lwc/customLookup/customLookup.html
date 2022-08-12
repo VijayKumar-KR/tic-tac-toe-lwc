@@ -1,0 +1,43 @@
+<template>
+    <div class="slds-combobox_container">
+        <div class={boxClass} aria-expanded="true" aria-haspopup="listbox" role="combobox">
+            <div class="slds-combobox__form-element" role="none">
+                <template if:true={isValueSelected}>
+                    <div class="slds-box slds-box_xx-small slds-pill-container">
+                        <lightning-pill
+                                class="pillSize"
+                                label={selectedTz}
+                                onremove={handleRemovePill}
+                        >
+                        </lightning-pill>
+                    </div>
+                </template>
+                <template if:false={isValueSelected}>
+                    <lightning-input
+                            class={inputClass}
+                            type="search"
+                            variant="label-hidden"
+                            label=""
+                            placeholder={searchPlaceholder}
+                            value={searchTerm}
+                            onclick={handleClick}
+                            onchange={onChange}
+                            autocomplete="false"
+                    >
+                    </lightning-input>
+                </template>
+            </div>
+            <div class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox">
+                <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                    <template for:each={options} for:item="tz">
+                        <li key={tz} data-id={tz.value} data-name={tz.label} data-item={tz.label} onclick={onSelect} role="presentation">
+                            <span class="slds-lookup__item-action" role="option">
+                                <span class="slds-truncate">{tz.label}</span>
+                            </span>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+        </div>
+    </div>
+</template>

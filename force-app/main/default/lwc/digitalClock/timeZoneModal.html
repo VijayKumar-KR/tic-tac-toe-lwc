@@ -16,13 +16,9 @@
                     <div class="detail">
                         <lightning-layout class="slds-align_absolute-center slds-p-around_small">
                             <lightning-layout-item padding="around-small">
-                                Select TimeZone 
-                                <lightning-combobox style="width: 16rem; color:black"
-                                                    name="Select Time Zone"
-                                                    value=''
-                                                    placeholder="Select Time Zone"
-                                                    options={options}
-                                                    onchange={handleChangeLevel}></lightning-combobox>
+                                <c-custom-lookup ontzselected={handleChangeTz} 
+                                                    onremovetimezone={handleRemoveTz} 
+                                                    options={options}></c-custom-lookup>
                             </lightning-layout-item>
                         </lightning-layout>
                         <lightning-layout if:true={selectedTimeZoneObj} class="slds-align_absolute-center slds-p-around_small">
