@@ -4,7 +4,7 @@
         <lightning-layout class="" multiple-rows style="background-color: dodgerblue;">
             <!-- IP details -->
             <lightning-layout-item class="userip" padding="around-medium">
-                <lightning-layout>
+                <lightning-layout style="font-size: 1rem;">
                     <b>Your Details:</b>
                 </lightning-layout>
                 <lightning-layout>
@@ -61,10 +61,10 @@
                         <span class="meridiem" data-id="meridiem"></span>
                     </lightning-layout>
                     <!-- date / timezone -->
-                    <lightning-layout multiple-rows class="slds-align_absolute-center">
-                        <!-- <lightning-layout-item class="">
+                    <lightning-layout class="slds-align_absolute-center">
+                        <lightning-layout-item class="" style="width: 4rem;" padding="around-small">
                             <img class="flag" data-id="flag" src={ipinfo.countryflag} alt="Flag">
-                        </lightning-layout-item> -->
+                        </lightning-layout-item>
                         <lightning-layout-item class="" style="letter-spacing: 1px;">
                             <lightning-formatted-date-time value={ipinfo.datetime} 
                                                     year="numeric" 
@@ -81,7 +81,7 @@
         </lightning-layout>
 
         <!-- favourites -->
-        <lightning-layout multiple-rows class="slds-p-around_small" style="background-color: black;">
+        <lightning-layout multiple-rows class="slds-p-around_small" style="background-color: steelblue;">
             <lightning-layout-item class="slds-align_absolute-center fav" padding="around-small">
                 favourites
             </lightning-layout-item>

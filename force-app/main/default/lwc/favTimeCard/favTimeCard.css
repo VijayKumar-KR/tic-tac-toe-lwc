@@ -12,3 +12,11 @@
     font-size: 3rem;
     padding-bottom: 2rem;
 }
+/* CSS to apply screens which are above 500px and below 1025px*/
+@media (min-width: 850px) and (max-width: 1025px){
+
+}
+/* CSS to apply screens which are above 500px and below 1025px*/
+@media (min-width: 480px) and (max-width: 850px){
+
+}

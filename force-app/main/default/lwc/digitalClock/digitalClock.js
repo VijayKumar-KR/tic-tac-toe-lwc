@@ -98,11 +98,10 @@ export default class DigitalClock extends LightningElement {
 
     //
     async getCountryFlag(code){
-        await fetch(COUNTRY_FLAGS_API+'/svg/'+code)
+        await fetch(COUNTRY_FLAGS_API+'/png/'+code)
         .then(response => {
             console.log('response: ',response);
             if(response.ok) {
-                console.log('response.blob(): ',response.blob());
                 return response.blob();
             } 
             else {
@@ -112,9 +111,9 @@ export default class DigitalClock extends LightningElement {
         .then(imageBlob => {
             console.log('imageBlob: ',imageBlob);
             // Then create a local URL for that image and print it 
-    //   const imageObjectURL = URL.createObjectURL(imageBlob);
-    //         console.log('flag: ',imageObjectURL);
-    //         this.ipinfo.countryflag = imageObjectURL;
+      const imageObjectURL = URL.createObjectURL(imageBlob);
+            console.log('flag: ',imageObjectURL);
+            this.ipinfo.countryflag = imageObjectURL;
         })
         .catch(error => console.log('error in getCountryFlag: ',error))
     } 
