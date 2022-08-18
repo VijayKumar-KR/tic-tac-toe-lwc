@@ -1,18 +1,26 @@
 import { LightningElement, track } from 'lwc';
 //background
 import digitalclockback from '@salesforce/resourceUrl/digitalclockback';
+//sunrise
+import sunrise from '@salesforce/resourceUrl/sunrise';
+//sunset
+import sunset from '@salesforce/resourceUrl/sunset';
 // render templates
 import digitalClock from './digitalClock.html';
 import timeZoneModal from './timeZoneModal.html';
 
 // worldtimeapi
-const WORLD_API_URL = 'http://worldtimeapi.org';
+const WORLD_TIME_API_URL = 'http://worldtimeapi.org';
 // ipinfoapi
-const IPINFO_API_URL = 'https://ipinfo.io';
+const IP_INFO_URL = 'https://ipinfo.io';
 // ipinfoapitoken
 const IPINFO_API = 'cc10f9e8099421';
 // countryFlags_API
-const COUNTRY_FLAGS_API = 'https://countryflagsapi.com';
+const COUNTRY_FLAGS_API_URL = 'https://countryflagsapi.com';
+// openweathermap
+const OPEN_WEATHER_MAP_URL = 'https://api.openweathermap.org';
+// openweathermap API
+const OPEN_WEATHER_MAP_API = '0adc3f334d7b5eccca7cbbb2db1c3bc0';
 
 export default class DigitalClock extends LightningElement {
 
@@ -38,6 +46,11 @@ export default class DigitalClock extends LightningElement {
     selectedFavTimeZoneList = []
     selectedTimeZoneObj = {}
     selectedFavTime = ''
+    // weather
+    weather = {}
+    // twilight
+    sunrise = sunrise
+    sunset = sunset
 
     // set background image
     get backgroundStyle() {
@@ -52,9 +65,10 @@ export default class DigitalClock extends LightningElement {
     }
 
     connectedCallback(){
+
         // current user timezone
         this.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        if(this.timezone == 'Asia/Calcutta'){
+        if(this.timezone === 'Asia/Calcutta'){
             this.timezone = 'Asia/Kolkata';
         }
         if(!this.options.length){
@@ -79,32 +93,27 @@ export default class DigitalClock extends LightningElement {
 
     // fetch current user ip details
     async getUserIp(){
-        await fetch(IPINFO_API_URL+'?token='+IPINFO_API)
+        await fetch(IP_INFO_URL+'?token='+IPINFO_API)
         .then(response => {
             if(response.ok) {
                 return response.clone().json();
             } 
-            else {
-                throw Error(response);
-            }
         })
         .then(ipinfo => {
             this.ipinfo = ipinfo;
             this.getCountryFlag(this.ipinfo.country);
+            this.getCurrentWeather(this.ipinfo.loc);
         })
         .catch(error => console.log('error in getUserIp: ',error))
     }
 
     //
     async getCountryFlag(code){
-        await fetch(COUNTRY_FLAGS_API+'/png/'+code)
+        await fetch(COUNTRY_FLAGS_API_URL+'/png/'+code)
         .then(response => {
             if(response.ok) {
                 return response.blob();
             } 
-            else {
-                throw Error(response);
-            }
         })
         .then(imageBlob => {
             // Then create a local URL for that image and print it 
@@ -116,14 +125,11 @@ export default class DigitalClock extends LightningElement {
 
     // fetch all timezone names
     async getAllTimeZone(){
-        await fetch(WORLD_API_URL+'/api/timezone')
+        await fetch(WORLD_TIME_API_URL+'/api/timezone')
             .then(response => {
                 if(response.ok) {
                     return response.clone().json();
                 } 
-                else {
-                    throw Error(response);
-                }
             })
             .then(timezone => {
                 this.options = []
@@ -135,10 +141,44 @@ export default class DigitalClock extends LightningElement {
             .catch(error => console.log('error in getAllTimeZone: ',error))
     }
 
+    // Current User weather
+    async getCurrentWeather(loc){
+        console.log('loc: ', loc);
+        console.log('sp: ', loc.split(',')[0]);
+        let latt = loc.split(',')[0];
+        let long = loc.split(',')[1];
+        await fetch(OPEN_WEATHER_MAP_URL+'/data/2.5/weather?lat='+latt+'&lon='+long+'&appid='+OPEN_WEATHER_MAP_API+'&units=Metric')
+            .then(response => {
+                if(response.ok) {
+                    return response.clone().json();
+                } 
+            })
+            .then(weather => {
+                this.weather.name = weather.name;
+                this.weather.country = weather.sys.country;
+                this.weather.temp = weather.main.temp;
+                this.weather.temp_max = weather.main.temp_max;
+                this.weather.temp_min = weather.main.temp_min;
+                this.weather.feels_like = weather.main.feels_like;
+                this.weather.pressure = weather.main.pressure;
+                this.weather.humidity = weather.main.humidity;
+                this.weather.visibility = weather.visibility;
+                this.weather.speed = weather.wind.speed;
+                this.weather.gust = weather.wind.gust;
+                this.weather.sunrise = weather.sys.sunrise+'000';
+                this.weather.sunset = weather.sys.sunset+'000';
+                this.weather.img = 'http://openweathermap.org/img/w/'+weather.weather[0].icon+'.png';
+                this.weather.title = weather.weather[0].main;
+                this.weather.description = weather.weather[0].description;
+            })
+            .catch(error => console.log('error in getCurrentWeather: ',error))
+    }
+
     handleModalPopUp(){
         // destroy timer of selected timezone in modal popup
         clearInterval(this.selectedtimer);
         this.selectedTimeZoneObj = {};
+        this.selectedFavTime = '';
         this.modalTemplate = !this.modalTemplate;
     }
 
@@ -157,7 +197,9 @@ export default class DigitalClock extends LightningElement {
     }
 
     handleAddFavTime(){
-        this.selectedFavTimeZoneList.push(this.selectedFavTime);
+        if(this.selectedFavTime){
+            this.selectedFavTimeZoneList.push(this.selectedFavTime);
+        }
         localStorage.setItem('favList', JSON.stringify(this.selectedFavTimeZoneList));
         this.handleModalPopUp();
     }

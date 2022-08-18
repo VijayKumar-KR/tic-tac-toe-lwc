@@ -1,7 +1,7 @@
 <template>
-    <lightning-layout class="slds-p-around_small slds-scrollable_y" multiple-rows style="background-color: black; max-height: 36rem;">
+    <lightning-layout class="slds-scrollable_y" multiple-rows style="background-color: black; max-height: 36rem;">
         <template for:each={favtimes} for:item="time" for:index="index">
-            <lightning-layout-item size="12" small-device-size="6" medium-device-size="6" large-device-size="4" padding="around-medium" key={time.tz}>
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4" padding="around-small" key={time.tz}>
                 <div class="slds-box slds-box_x-small slds-drop-zone_drag">
                     <!-- time -->
                     <lightning-layout class="slds-text-align_center" style="margin-top: -9%;">
@@ -19,7 +19,7 @@
                             <span class="val" data-id="sec-2">{time.sec}</span>
                             <span class="text">Seconds</span>
                         </lightning-layout-item>
-                        <lightning-layout-item class="block" padding="around-small" style="margin-right: -3%; margin-top: 1%;">
+                        <lightning-layout-item alignment-bump="left" class="block closeicon" padding="around-small" style="margin-right: -3%; margin-top: 1%;">
                             <lightning-layout multiple-rows>
                                 <lightning-layout-item class="block" padding="around-small">
                                     <lightning-icon icon-name="utility:close" 

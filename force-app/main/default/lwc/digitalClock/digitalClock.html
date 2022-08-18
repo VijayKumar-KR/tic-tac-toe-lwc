@@ -1,7 +1,7 @@
 <template>
     <div class="main" style={backgroundStyle}>
         <!-- Title -->
-        <lightning-layout class="" multiple-rows style="background-color: dodgerblue;">
+        <lightning-layout class="" multiple-rows style="background-color: #0d5baa;">
             <!-- IP details -->
             <lightning-layout-item class="userip" padding="around-medium">
                 <lightning-layout style="font-size: 1rem;">
@@ -40,6 +40,142 @@
 
         <!-- Time Card -->
         <lightning-layout class="slds-align_absolute-center slds-p-around_medium" multiple-rows style="background-color: midnightblue;">
+            <lightning-layout-item class="userip">
+                <div class="slds-box">
+                    <table>
+                        <tr>
+                            <td colspan="2">
+                                <lightning-layout class="slds-align_absolute-center" style="font-size: 1rem;">
+                                    Weather Forcast
+                                </lightning-layout>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <lightning-layout class="slds-align_absolute-center slds-border_bottom">
+                                    <lightning-icon class="loc-icon" icon-name="utility:checkin" alternative-text="Loc" title="Loc" size="x-small">
+                                    </lightning-icon>
+                                    {weather.name}, {weather.country}
+                                </lightning-layout>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <lightning-layout class="slds-align_absolute-center" padding="small" style="font-size: 1rem;">
+                                    {weather.title}, {weather.description}
+                                </lightning-layout>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom: 1rem;">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <img id="wicon" src={weather.img} style="width: 5rem;" class="slds-align_absolute-center">
+                                        </td>
+                                        <td style="font-size: 20px;">
+                                            {weather.temp}<span class="degree">°C</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th rowspan="2" style="padding-right: 1rem;">
+                                            {weather.temp_max}<span style="font-size: 8px;" class="degree">°C</span> / {weather.temp_min}<span style="font-size: 8px;" class="degree">°C</span>
+                                        </th>
+                                        <td>Feels Like</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{weather.feels_like}</td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>Pressure:</td>
+                                        <td>{weather.pressure}hPa</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Humidity:</td>
+                                        <td>{weather.humidity}%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Visibility:</td>
+                                        <td>{weather.visibility}m</td>
+                                    </tr>
+                    
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-right: 1rem;">
+                                <table>
+                                    <tr>
+                                        <td colspan="2">
+                                            <lightning-layout-item class="slds-align_absolute-center" style="letter-spacing: 8px; text-transform: uppercase;">
+                                                twilight
+                                            </lightning-layout-item>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <th rowspan="2" style="font-size: 1rem;">
+                                                        <img id="sunrise" src={sunrise} style="width: 40px;">
+                                                    </th>
+                                                    <td>Sunrise</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <lightning-formatted-date-time value={weather.sunrise} hour="numeric" minute="numeric"
+                                                                                        second="numeric">
+                                                        </lightning-formatted-date-time>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <th rowspan="2" style="font-size: 1rem;">
+                                                        <img id="sunset" src={sunset} style="width: 40px;">
+                                                    </th>
+                                                    <td>Sunset</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <lightning-formatted-date-time value={weather.sunset} hour="numeric" minute="numeric"
+                                                                                        second="numeric">
+                                                        </lightning-formatted-date-time>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding-left: 1rem;">
+                                <table>
+                                    <tr>
+                                        <td colspan="2">
+                                            <lightning-layout-item style="letter-spacing: 8px; text-transform: uppercase;">wind
+                                            </lightning-layout-item>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Speed</td>
+                                        <td>Gust</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{weather.speed}m/s</td>
+                                        <td>{weather.gust}m/s</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </lightning-layout-item>
             <lightning-layout-item style="width: 23rem;" size="12" small-device-size="12" medium-device-size="4" large-device-size="4" padding="around-small">
                 <div class="slds-box">
                     <!-- time -->
@@ -86,7 +222,12 @@
                 favourites
             </lightning-layout-item>
             <lightning-layout-item alignment-bump="left" padding="around-small">
-                <lightning-icon icon-name="action:close" alternative-text="Add" title="Add" size="small" class="addicon" onclick={handleModalPopUp}></lightning-icon>
+                <lightning-icon icon-name="action:close" 
+                                alternative-text="Add" 
+                                title="Add" 
+                                size="small" 
+                                class="addicon" 
+                                onclick={handleModalPopUp}></lightning-icon>
             </lightning-layout-item>
         </lightning-layout>
 
