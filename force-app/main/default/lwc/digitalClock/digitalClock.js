@@ -143,6 +143,21 @@ export default class DigitalClock extends LightningElement {
 
     // Current User weather
     async getCurrentWeather(loc){
+
+        // var latitude;
+        // var longitude;
+        // if (navigator.geolocation) {
+        //     navigator.geolocation.getCurrentPosition(position => {
+
+        //     // Get the Latitude and Longitude from Geolocation API
+        //     latitude = position.coords.latitude;
+        //     longitude = position.coords.longitude;
+        //     });
+        // }
+        
+        // console.log('loc: ', latitude);
+        // console.log(' long: ', longitude);
+        
         console.log('loc: ', loc);
         console.log('sp: ', loc.split(',')[0]);
         let latt = loc.split(',')[0];
