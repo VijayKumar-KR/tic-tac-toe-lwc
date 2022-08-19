@@ -11,6 +11,18 @@
 .colon{
     font-size: 3rem;
     padding-bottom: 2rem;
+    animation: blink-animation 1s steps(5, start) infinite;
+    -webkit-animation: blink-animation 1s steps(5, start) infinite;
+}
+@keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+@-webkit-keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
 }
 /* CSS to apply screens which are above 500px and below 1025px*/
 @media (min-width: 850px) and (max-width: 1025px){
