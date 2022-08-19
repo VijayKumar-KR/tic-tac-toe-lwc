@@ -62,7 +62,7 @@ export default class TicTacToe extends LightningElement {
                 { label: 'Level 0: Easy', value: 'CPU_Easy' },
                 { label: 'Level 1: Beast', value: 'CPU_Hard' }]
     // computer turn var
-    level = 'CPU_Easy';
+    level = 'CPU_Hard';
     isFirstTurn = true;
     // play with computer
     computerturn = false
